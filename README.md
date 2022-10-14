@@ -5,7 +5,7 @@ A quick way to get the average of files or your clipboard. I mainly built this a
 
 ## Usage
 
-I recommend building and then aliasing the executable so that it can be used from any point in the sys.tem
+I recommend building and then aliasing the executable so that it can be used from any point in the system
 
 ### Get the average of values in your clipboard
 `avg -c`
