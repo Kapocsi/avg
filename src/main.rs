@@ -95,9 +95,9 @@ fn main() {
         });
 
         println!("Average = {}", fstats.0);
-        println!("Min     = {}", fstats.1);
-        println!("Max     = {}", fstats.2);
-        println!("Mean    = {}", fstats.3);
+        println!("Min = {}", fstats.1);
+        println!("Max = {}", fstats.2);
+        println!("Mean = {}", fstats.3);
     } else {
         let helptext = "
             Welcome to 'Average' a quick way to get a the average number: \n
