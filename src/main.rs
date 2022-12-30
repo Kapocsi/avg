@@ -10,28 +10,32 @@ use std::{env, f32, str::FromStr};
 /// stat(vec![vec![4.0, 2.0, 1.0, 3.0]])
 /// >>> (2.5, 1.0, 4.0, 3.0)
 /// ```
-fn stats(mut x: Vec<f32>) -> (f32, f32, f32, f32) {
+#[derive(Debug, PartialEq)]
+struct Stats {
+    average: f32,
+    min: f32,
+    max: f32,
+    mean: f32,
+}
+
+fn stats(mut x: Vec<f32>) -> Stats {
     x.sort_by(|a, b| a.partial_cmp(b).unwrap());
     let len: i32 = x.len() as i32;
     // Ensures that if there are no numbers that a zero is returned
-    match len {
-        0 => (0.0, 0.0, 0.0, 0.0),
-        _ => {
-            let sum: f32 = {
-                let mut total: f32 = 0.0;
-                for i in &x {
-                    total += i;
-                }
-                total
-            };
-
-            let average: f32 = sum / len as f32;
-            let min: f32 = x[0];
-            let max: f32 = x[(len - 1) as usize];
-            let mean: f32 = x[{ ((len as f32) / 2.0) as i32 } as usize];
-
-            (average, min, max, mean)
-        }
+    if len == 0 {
+        return Stats {
+            average: 0.0,
+            min: 0.0,
+            max: 0.0,
+            mean: 0.0,
+        };
+    }
+    let sum: f32 = x.iter().sum();
+    Stats {
+        average: sum as f32 / len as f32,
+        min: x[0],
+        max: x[(len - 1) as usize],
+        mean: x[{ ((len as f32) / 2.0) as i32 } as usize],
     }
 }
 
@@ -94,10 +98,10 @@ fn main() {
             }
         });
 
-        println!("Average = {}", fstats.0);
-        println!("Min     = {}", fstats.1);
-        println!("Max     = {}", fstats.2);
-        println!("Mean    = {}", fstats.3);
+        println!("Average = {}", fstats.average);
+        println!("Min     = {}", fstats.min);
+        println!("Max     = {}", fstats.max);
+        println!("Mean    = {}", fstats.mean);
     } else {
         let helptext = "
             Welcome to 'Average' a quick way to get a the average number: \n
@@ -113,8 +117,17 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use crate::stats;
+    use crate::Stats;
     #[test]
     fn status_test() {
-        assert_eq!(stats(vec![1.0, 2.0, 3.0, 4.0]), (2.5, 1.0, 4.0, 3.0));
+        assert_eq!(
+            stats(vec![1.0, 2.0, 3.0, 4.0]),
+            Stats {
+                average: 2.5,
+                min: 1.0,
+                max: 4.0,
+                mean: 3.0
+            }
+        );
     }
 }
