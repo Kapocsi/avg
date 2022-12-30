@@ -97,11 +97,11 @@ fn main() {
                 vec![0.0]
             }
         });
-
         println!("Average = {}", fstats.average);
         println!("Min     = {}", fstats.min);
         println!("Max     = {}", fstats.max);
         println!("Mean    = {}", fstats.mean);
+
     } else {
         let helptext = "
             Welcome to 'Average' a quick way to get a the average number: \n
